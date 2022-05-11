@@ -40,11 +40,18 @@ public class Main {
         file.createNewFile();
         FileWriter writer = new FileWriter(file);
         writer.write("Taskkill /IM SQLiteStudio.exe /F" + "\n");
+
+        writer.write("set /a db_counter = 0 \n");
+        writer.write("set /a vacuumed_counter = 0 \n");
+
         for (int i = 0; i < dbPaths.size(); i++) {
             writer.write("echo --------------------------" + dbNames.get(i).toUpperCase() + "-------------------------- >> " + logPath + "\n");
+
             writer.write("cd /d " + dbDirectories.get(i) + "\n");
             //начинаем процесс бекапа и вакуума только если база использовалась давно
-            writer.write("@echo off" + "\n");
+
+            writer.write("set /a db_counter += 1 \n");
+            writer.write("set /a vacuumed_counter += 1 \n");
             writer.write("set N=60" + "\n");
             writer.write("set file=" + dbPaths.get(i) + "\n");
             writer.write("set /a const=%N%*60" + "\n");
@@ -74,7 +81,7 @@ public class Main {
             writer.write("set /a n2=mm+n" + "\n");
             writer.write("set /a n1=timet+n*60" + "\n");
             writer.write("if %n2% GEQ %N% (" + "\n");
-            writer.write("@echo on" + "\n");
+
             writer.write("echo The difference is more than %n% minutes, starting vacuumization! >> " + logPath + "\n");
             writer.write("echo 1. A new vacuumization started %date% at %time% >> " + logPath + "\n");
             if (archivation == "winrar") {
@@ -109,13 +116,17 @@ public class Main {
             writer.write("if exist " + dbNames.get(i) + "_vacuumed.db (\n");
             writer.write("echo ALERT The base " + dbNames.get(i) + ", number " + i + " at LPU " + lpuName + " wasn't completely vacuumed! >> " + logPath + "\n");
             writer.write("cd /d " + curlPath + " \n");
-            writer.write("curl https://api.telegram.org/bot" + botToken + "/sendMessage?chat_id=" + chat_id + "^^^&text=" + "\"Database " + dbNames.get(i) + ", number " + i + ", at LPU " + lpuName + " wasn't completely vacuumed!\"" + ")" +"\n");
+            writer.write("curl https://api.telegram.org/bot" + botToken + "/sendMessage?chat_id=" + chat_id + "^^^&text=" + "\"Database " + dbNames.get(i) + ", number " + i + ", at LPU " + lpuName + " wasn't completely vacuumed!\" \n");
+            writer.write("set /a vacuumed_counter -= 1 )\n");
             writer.write("echo 7. The old base was deleted %time% >> " + logPath + "\n");
-            writer.write(") else echo The difference is less than %n% minutes, vacuumization does not begin >> " + logPath + "\n");
+            writer.write(") else ( \n" +
+                    "echo The difference is less than %n% minutes, vacuumization does not begin >> " + logPath + "\n");
+            writer.write("set /a vacuumed_counter -= 1 )\n");
             writer.write("echo ------------------------------------------------------------- >> " + logPath + "\n" + "\n");
         }
         writer.write("cd /d " + curlPath + "\n");
-        writer.write("set message=\"Bases at LPU " + lpuName + " were vacuumized!\"" + "\n");
+        writer.write("set message=\"%vacuumed_counter% out of %db_counter% bases at LPU " + lpuName + " were vacuumized!\"" + "\n");
+        writer.write("echo %vacuumed_counter% out of %db_counter% bases were vacuumized! >> " + logPath + "\n");
         writer.write("curl https://api.telegram.org/bot" + botToken + "/sendMessage?chat_id=" + chat_id + "^^^&text=%message%"+ "\n");
         writer.flush();
         writer.close();
