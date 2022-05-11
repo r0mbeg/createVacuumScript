@@ -6,11 +6,9 @@ public class Main {
         String desktopDirectory = System.getProperty("user.home") + "\\Desktop";
         String botToken = "5195909558:AAHeO85DtxK_j09Y3i4cM1KkE4obSr7ng9w";
         String chat_id = "-1001760421137";
-
         String lpuName = "my_lpu";
         String archivation = "winrar";
         //winrar 7z no
-
         ArrayList<String> inputList = new ArrayList<>();
         try {
             File inputFile = new File(desktopDirectory + "\\input.txt");
