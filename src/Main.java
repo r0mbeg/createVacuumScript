@@ -40,12 +40,14 @@ public class Main {
         file.createNewFile();
         FileWriter writer = new FileWriter(file);
         writer.write("Taskkill /IM SQLiteStudio.exe /F" + "\n");
+        writer.write("set /a res = 1\n");
         writer.write("set /a db_counter = 0 \n");
         writer.write("set /a vacuumed_counter = 0 \n");
         for (int i = 0; i < dbPaths.size(); i++) {
             writer.write("echo --------------------------" + dbNames.get(i).toUpperCase() + "-------------------------- >> " + logPath + "\n");
             writer.write("cd /d " + dbDirectories.get(i) + "\n");
             //начинаем процесс бекапа и вакуума только если база использовалась давно
+            writer.write("set /a res = 1\n");
             writer.write("set /a db_counter += 1 \n");
             writer.write("set /a vacuumed_counter += 1 \n");
             writer.write("echo 1. A new vacuumization started %date% at %time% >> " + logPath + "\n");
@@ -78,7 +80,11 @@ public class Main {
             writer.write("if exist " + dbNames.get(i) + "_vacuumed.db " + "ren " + dbNames.get(i) + "_vacuumed.db " + dbNames.get(i) +".db\n");
             writer.write("echo 6. The vacuumized base was renamed to the main at %time% >> " + logPath + "\n");
             writer.write("if exist " + dbNames.get(i) + ".db del " + dbNames.get(i) + "_copy.db\n");
-            writer.write("if exist " + dbNames.get(i) + "_vacuumed.db (\n");
+
+            writer.write("if exist " + dbNames.get(i) + "_vacuumed.db set /a res = 0\n");
+            writer.write("if exist " + dbNames.get(i) + "_copy.db set /a res = 0\n");
+
+            writer.write("if %res% == 0 ( \n");
             writer.write("echo ALERT The base " + dbNames.get(i) + ", number " + i + " at LPU " + lpuName + " wasn't completely vacuumed! >> " + logPath + "\n");
             writer.write("cd /d " + curlPath + " \n");
             writer.write("curl https://api.telegram.org/bot" + botToken + "/sendMessage?chat_id=" + chat_id + "^^^&text=" + "\"Database " + dbNames.get(i) + ", number " + i + ", at LPU " + lpuName + " wasn't completely vacuumed!\" \n");
