@@ -52,6 +52,8 @@ public class Main {
             //начинаем процесс бекапа и вакуума только если база использовалась давно
             writer.write("set /a res = 1\n");
             writer.write("set /a db_counter += 1 \n");
+
+            writer.write("if exist sqlite3.exe ( \n");
             writer.write("set /a vacuumed_counter += 1 \n");
             writer.write("echo 1. A new vacuumization started %date% at %time% >> " + logPath + "\n");
             if (archivation == "winrar") {
@@ -93,6 +95,7 @@ public class Main {
             writer.write("curl https://api.telegram.org/bot" + botToken + "/sendMessage?chat_id=" + chat_id + "^^^&text=" + "\"Database " + dbNames.get(i) + ", number " + i + ", at LPU " + lpuName + " wasn't completely vacuumed!\" \n");
             writer.write("set /a vacuumed_counter -= 1 )\n");
             writer.write("echo 7. The old base was deleted %time% >> " + logPath + "\n");
+            writer.write(")\n");
             writer.write("echo ------------------------------------------------------------- >> " + logPath + "\n" + "\n");
         }
         writer.write("cd /d " + curlPath + "\n");
