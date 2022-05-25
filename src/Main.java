@@ -6,7 +6,7 @@ public class Main {
         String desktopDirectory = System.getProperty("user.home") + "\\Desktop";
         String botToken = "5195909558:AAHeO85DtxK_j09Y3i4cM1KkE4obSr7ng9w";
         String chat_id = "-1001760421137";
-        String lpuName = "my_lpu";
+        String lpuName = "zk40";
         String archivation = "winrar";//winrar 7z no
         ArrayList<String> inputList = new ArrayList<>();
         try {
@@ -39,6 +39,9 @@ public class Main {
         File file = new File(desktopDirectory + "\\vacuum_" + lpuName + ".bat");
         file.createNewFile();
         FileWriter writer = new FileWriter(file);
+
+
+        writer.write("iisreset /stop" + "\n");
         writer.write("Taskkill /IM SQLiteStudio.exe /F" + "\n");
         writer.write("set /a res = 1\n");
         writer.write("set /a db_counter = 0 \n");
@@ -96,6 +99,8 @@ public class Main {
         writer.write("set message=\"%vacuumed_counter% out of %db_counter% bases at LPU " + lpuName + " were vacuumized!\"" + "\n");
         writer.write("echo %vacuumed_counter% out of %db_counter% bases were vacuumized! >> " + logPath + "\n");
         writer.write("curl https://api.telegram.org/bot" + botToken + "/sendMessage?chat_id=" + chat_id + "^^^&text=%message%"+ "\n");
+        writer.write("iisreset /start" + "\n");
+
         writer.flush();
         writer.close();
         System.out.println("Для баз ЛПУ " + lpuName + " сгенерирован батник!");
