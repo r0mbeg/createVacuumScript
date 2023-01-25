@@ -6,7 +6,7 @@ public class Main {
         String desktopDirectory = System.getProperty("user.home") + "\\Desktop";
         String botToken = "5195909558:AAHeO85DtxK_j09Y3i4cM1KkE4obSr7ng9w";
         String chat_id = "-1001760421137";
-        String lpuName = "zk40";
+        String lpuName = "p94";
         String archivation = "winrar";//winrar 7z no
         ArrayList<String> inputList = new ArrayList<>();
         try {
@@ -40,7 +40,7 @@ public class Main {
         file.createNewFile();
         FileWriter writer = new FileWriter(file);
 
-
+        writer.write("cd /d C:\\Windows\\System32" + "\n");
         writer.write("iisreset /stop" + "\n");
         writer.write("Taskkill /IM SQLiteStudio.exe /F" + "\n");
         writer.write("set /a res = 1\n");
