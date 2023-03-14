@@ -1,0 +1,23 @@
+
+`
+java:S1192Q"JDefine a constant instead of duplicating this literal ", number " 4 times.(¤Ùï°
+f
+java:S1192<"KDefine a constant instead of duplicating this literal "if exist " 12 times.(ŒŞ‰§şÿÿÿÿ
+h
+java:S1192c"RDefine a constant instead of duplicating this literal "_backup_%date%.db" 4 times.(‰²¢à
+]
+java:S11924"GDefine a constant instead of duplicating this literal "cd /d " 4 times.(Œıá
+R
+java:S4973b"<Strings and Boxed types should be compared using "equals()".(ËœÏ‡
+W
+java:S4973e"<Strings and Boxed types should be compared using "equals()".(ÀÎŸ˜úÿÿÿÿ
+0
+java:S1220""Move this file to a named package.
+^
+java:S2095*"HUse try-with-resources or close this "FileWriter" in a "finally" clause.(´ˆâë
+b
+java:S2095"LUse try-with-resources or close this "BufferedReader" in a "finally" clause.(œØ»
+Z
+java:S2147"DCombine this catch with the one at line 22, which has the same body.(ï­£Ä
+\	java:S899)"BDo something with the "boolean" value returned by "createNewFile".(Ğ’Íùÿÿÿÿ
+N	java:S106v"9Replace this use of System.out or System.err by a logger.(ö‹Ç•

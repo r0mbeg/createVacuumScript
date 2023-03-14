@@ -60,7 +60,6 @@ public class Main extends bot_config{
             writer.write("if exist " + dbNames.get(i)+ "_backup_*.rar forfiles /p " + dbDirectories.get(i) + " /m " + dbNames.get(i) + "_backup_*.rar /d -32 /c \"cmd /c del @file\"\n");
             writer.write("if exist " + dbNames.get(i)+ "_backup_*.7z forfiles /p " + dbDirectories.get(i) + " /m " + dbNames.get(i) + "_backup_*.7z /d -32 /c \"cmd /c del @file\"\n");
             writer.write("if exist " + dbNames.get(i) + "_backup_*.db forfiles /p " + dbDirectories.get(i) + " /m " + dbNames.get(i) + "_backup_*.db /d -32 /c \"cmd /c del @file\"\n");
-            //очистка архивов
             writer.write("if exist " + dbNames.get(i)+ "_archive_*.db forfiles /p " + dbDirectories.get(i) + " /m " + dbNames.get(i) + "_archive_*.db /d -5 /c \"cmd /c del @file\"\n");
             writer.write("echo 2. The old backups and archives were deleted at %time% >>  " + logPath + "\n");
             writer.write("ren " + dbNames.get(i) + ".db " + dbNames.get(i) + "_copy.db" + "\n");
@@ -71,6 +70,7 @@ public class Main extends bot_config{
             writer.write("echo 4. The base was vacuumized at %time% >> " + logPath + "\n");
             writer.write("echo 5. The old base was renamed %time% >> " + logPath + "\n");
             writer.write("if exist " + dbNames.get(i) + ".db " + "del " + dbNames.get(i) + ".db  " + "\n");
+            writer.write("for %%i in ("+ dbNames.get(i) + "_vacuumed.db) do if %%~zi LSS 5000 ( set /a res = 0)");
             writer.write("if exist " + dbNames.get(i) + "_vacuumed.db " + "ren " + dbNames.get(i) + "_vacuumed.db " + dbNames.get(i) +".db\n");
             writer.write("echo 6. The vacuumized base was renamed to the main at %time% >> " + logPath + "\n");
             writer.write("if exist " + dbNames.get(i) + ".db del " + dbNames.get(i) + "_copy.db\n");
