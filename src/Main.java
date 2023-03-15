@@ -6,7 +6,7 @@ public class Main extends bot_config{
     public static void main(String[] args) throws IOException {
         String desktopDirectory = System.getProperty("user.home") + "\\Desktop";
 
-        String lpuName = "p49";
+        String lpuName = "p71";
         String archivation = "winrar";//winrar 7z no
 
         ArrayList<String> inputList = new ArrayList<>();
@@ -70,6 +70,7 @@ public class Main extends bot_config{
             writer.write("echo 4. The base was vacuumized at %time% >> " + logPath + "\n");
             writer.write("echo 5. The old base was renamed %time% >> " + logPath + "\n");
             writer.write("if exist " + dbNames.get(i) + ".db " + "del " + dbNames.get(i) + ".db  " + "\n");
+            writer.write("for %%i in ("+ dbNames.get(i) + "_backup_%date%.db) do if %%~zi LSS 5000 ( set /a res = 0)");
             writer.write("for %%i in ("+ dbNames.get(i) + "_vacuumed.db) do if %%~zi LSS 5000 ( set /a res = 0)");
             writer.write("if exist " + dbNames.get(i) + "_vacuumed.db " + "ren " + dbNames.get(i) + "_vacuumed.db " + dbNames.get(i) +".db\n");
             writer.write("echo 6. The vacuumized base was renamed to the main at %time% >> " + logPath + "\n");
