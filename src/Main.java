@@ -64,14 +64,14 @@ public class Main extends bot_config{
             writer.write("echo 2. The old backups and archives were deleted at %time% >>  " + logPath + "\n");
             writer.write("ren " + dbNames.get(i) + ".db " + dbNames.get(i) + "_copy.db" + "\n");
             writer.write("sqlite3 \"" + dbNames.get(i) + "_copy.db\" \".backup '" + dbNames.get(i) + "_backup_%date%.db'\"" + "\n");
+            writer.write("for %%i in ("+ dbNames.get(i) + "_backup_%date%.db) do if %%~zi LSS 5000 ( set /a res = 0)" + "\n");
             writer.write("echo 3. A new backup was created at %time% >> " + logPath + "\n");
             writer.write("if exist " + dbNames.get(i) + "_vacuumed.db del " + dbNames.get(i) + "_vacuumed.db" + "\n");
             writer.write("sqlite3 \"" + dbNames.get(i) + "_copy.db\" \"VACUUM INTO '" + dbNames.get(i) + "_vacuumed.db'\"" + "\n");
+            writer.write("for %%i in ("+ dbNames.get(i) + "_vacuumed.db) do if %%~zi LSS 5000 ( set /a res = 0)"+ "\n");
             writer.write("echo 4. The base was vacuumized at %time% >> " + logPath + "\n");
             writer.write("echo 5. The old base was renamed %time% >> " + logPath + "\n");
             writer.write("if exist " + dbNames.get(i) + ".db " + "del " + dbNames.get(i) + ".db  " + "\n");
-            writer.write("for %%i in ("+ dbNames.get(i) + "_backup_%date%.db) do if %%~zi LSS 5000 ( set /a res = 0)" + "\n");
-            writer.write("for %%i in ("+ dbNames.get(i) + "_vacuumed.db) do if %%~zi LSS 5000 ( set /a res = 0)"+ "\n");
             writer.write("if exist " + dbNames.get(i) + "_vacuumed.db " + "ren " + dbNames.get(i) + "_vacuumed.db " + dbNames.get(i) +".db\n");
             writer.write("echo 6. The vacuumized base was renamed to the main at %time% >> " + logPath + "\n");
             writer.write("if exist " + dbNames.get(i) + ".db del " + dbNames.get(i) + "_copy.db\n");
