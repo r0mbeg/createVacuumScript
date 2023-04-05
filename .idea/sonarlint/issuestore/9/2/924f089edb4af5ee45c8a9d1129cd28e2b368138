@@ -13,11 +13,11 @@ W
 java:S4973e"<Strings and Boxed types should be compared using "equals()".(ÀÎŸ˜úÿÿÿÿ
 0
 java:S1220""Move this file to a named package.
-^
-java:S2095*"HUse try-with-resources or close this "FileWriter" in a "finally" clause.(´ˆâë
 b
 java:S2095"LUse try-with-resources or close this "BufferedReader" in a "finally" clause.(œØ»
-Z
-java:S2147"DCombine this catch with the one at line 22, which has the same body.(ï­£Ä
-\	java:S899)"BDo something with the "boolean" value returned by "createNewFile".(Ğ’Íùÿÿÿÿ
-N	java:S106v"9Replace this use of System.out or System.err by a logger.(ö‹Ç•
+e
+java:S2095*"HUse try-with-resources or close this "FileWriter" in a "finally" clause.(´ˆâë8›Ÿ‡Âò0
+a
+java:S2147"DCombine this catch with the one at line 22, which has the same body.(ï­£Ä8¬‰ŠÂò0
+c	java:S899)"BDo something with the "boolean" value returned by "createNewFile".(Ğ’Íùÿÿÿÿ8¥Ÿ‡Âò0
+U	java:S106v"9Replace this use of System.out or System.err by a logger.(ö‹Ç•8®Ÿ‡Âò0
