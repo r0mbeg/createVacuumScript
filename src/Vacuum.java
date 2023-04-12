@@ -6,7 +6,7 @@ public class Vacuum extends bot_config{
     public static void main(String[] args) throws IOException {
         String desktopDirectory = System.getProperty("user.home") + "\\Desktop";
 
-        String lpuName = "d58";
+        String lpuName = "test_lpu";
         String archivation = "7z";//winrar 7z no
 
         ArrayList<String> inputList = new ArrayList<>();
@@ -63,6 +63,7 @@ public class Vacuum extends bot_config{
             writer.write("if exist " + dbNames.get(i)+ "_archive_*.db forfiles /p " + dbDirectories.get(i) + " /m " + dbNames.get(i) + "_archive_*.db /d -5 /c \"cmd /c del @file\"\n");
             writer.write("echo 2. The old backups and archives were deleted at %time% >>  " + logPath + "\n");
             writer.write("ren " + dbNames.get(i) + ".db " + dbNames.get(i) + "_copy.db" + "\n");
+            writer.write("if not exist " + dbNames.get(i) + "_copy.db set /a res = 0\n");
             writer.write("sqlite3 \"" + dbNames.get(i) + "_copy.db\" \".backup '" + dbNames.get(i) + "_backup_%date%.db'\"" + "\n");
             writer.write("for %%i in ("+ dbNames.get(i) + "_backup_%date%.db) do if %%~zi LSS 5000 ( set /a res = 0)" + "\n");
             writer.write("echo 3. A new backup was created at %time% >> " + logPath + "\n");
@@ -75,15 +76,15 @@ public class Vacuum extends bot_config{
             writer.write("if exist " + dbNames.get(i) + "_vacuumed.db " + "ren " + dbNames.get(i) + "_vacuumed.db " + dbNames.get(i) +".db\n");
             writer.write("echo 6. The vacuumized base was renamed to the main at %time% >> " + logPath + "\n");
             writer.write("if exist " + dbNames.get(i) + ".db del " + dbNames.get(i) + "_copy.db\n");
+            writer.write("echo 7. The old base was deleted %time% >> " + logPath + "\n");
             writer.write("if exist " + dbNames.get(i) + "_vacuumed.db set /a res = 0\n");
-            writer.write("if exist " + dbNames.get(i) + "_copy.db set /a res = 0\n");
+            writer.write("if exist " + dbNames.get(i) + "_copy.db set /a res = 0 )\n");
+            writer.write("else (set /a res = 0)\n");
             writer.write("if %res% == 0 ( \n");
             writer.write("echo ALERT The base " + dbNames.get(i) + ", number " + i + " at LPU " + lpuName + " wasn't completely vacuumed! >> " + logPath + "\n");
             writer.write("cd /d " + curlPath + " \n");
             writer.write("curl https://api.telegram.org/bot" + botToken + "/sendMessage?chat_id=" + chat_id + "^^^&text=" + "\"Database " + dbNames.get(i) + ", number " + i + ", at LPU " + lpuName + " wasn't completely vacuumed!\" \n");
             writer.write("set /a vacuumed_counter -= 1 )\n");
-            writer.write("echo 7. The old base was deleted %time% >> " + logPath + "\n");
-            writer.write(")\n");
             writer.write("echo ------------------------------------------------------------- >> " + logPath + "\n" + "\n");
         }
 

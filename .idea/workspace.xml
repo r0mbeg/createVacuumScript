@@ -2,12 +2,10 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="848c41f3-5df6-4af5-91df-99649f63470f" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/.idea/uiDesigner.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/sonarlint/issuestore/9/2/924f089edb4af5ee45c8a9d1129cd28e2b368138" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/sonarlint/issuestore/9/2/924f089edb4af5ee45c8a9d1129cd28e2b368138" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/.name" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.name" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/createVacuumScript.iml" beforeDir="false" afterPath="$PROJECT_DIR$/createVacuumScript.iml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/createVacuumScript/Main.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Vacuum.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/createVacuumScript/Vacuum.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/createVacuumScript/Vacuum.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Vacuum.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Vacuum.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
