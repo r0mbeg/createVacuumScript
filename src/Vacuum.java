@@ -6,7 +6,7 @@ public class Vacuum extends bot_config{
     public static void main(String[] args) throws IOException {
         String desktopDirectory = System.getProperty("user.home") + "\\Desktop";
 
-        String lpuName = "test_lpu";
+        String lpuName = "p75";
         String archivation = "7z";//winrar 7z no
 
         ArrayList<String> inputList = new ArrayList<>();
@@ -19,8 +19,6 @@ public class Vacuum extends bot_config{
                 inputList.add(line);
                 line = reader.readLine();
             }
-        } catch (FileNotFoundException e) {
-            e.printStackTrace();
         } catch (IOException e) {
             e.printStackTrace();
         }

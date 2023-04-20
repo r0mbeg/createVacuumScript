@@ -4,7 +4,7 @@ import java.util.ArrayList;
 public class Backup {
     public static void main(String[] args) throws IOException {
         String desktopDirectory = System.getProperty("user.home") + "\\Desktop";
-        String lpuName = "d73";
+        String lpuName = "p75";
         String archivation = "7z";//winrar 7z no
         ArrayList<String> inputList = new ArrayList<>();
         try {
@@ -16,12 +16,18 @@ public class Backup {
                 inputList.add(line);
                 line = reader.readLine();
             }
-        } catch (FileNotFoundException e) {
-            e.printStackTrace();
         } catch (IOException e) {
             e.printStackTrace();
         }
+
+
+
         String logPath = inputList.get(0);
+        logPath = logPath.substring(0, logPath.indexOf("vacuumization.log"))+"backup.log";
+
+
+
+
         String archiverPath = inputList.get(2);
         ArrayList<String> dbPaths = new ArrayList<>();
         for (int i = 3; i < inputList.size(); i++) {
@@ -37,8 +43,8 @@ public class Backup {
         file.createNewFile();
         FileWriter writer = new FileWriter(file);
 
-        writer.write("cd /d C:\\Windows\\System32" + "\n");
-        writer.write("iisreset /stop" + "\n");
+        //writer.write("cd /d C:\\Windows\\System32" + "\n");
+        //writer.write("iisreset /stop" + "\n");
         writer.write("Taskkill /IM SQLiteStudio.exe /F" + "\n");
 
         for (int i = 0; i < dbPaths.size(); i++) {
@@ -54,8 +60,8 @@ public class Backup {
             writer.write("echo 3. A new backup was created at %time% >> " + logPath + "\n");
             writer.write("echo ------------------------------------------------------------- >> " + logPath + "\n" + "\n");
         }
-        writer.write("cd /d C:\\Windows\\System32" + "\n");
-        writer.write("iisreset /start" + "\n");
+        //writer.write("cd /d C:\\Windows\\System32" + "\n");
+        //writer.write("iisreset /start" + "\n");
 
         writer.write("echo -----------------BACKUPS-ARCHIVATION-STARTS-------------------- >> " + logPath + "\n");
         for (int i = 0; i < dbPaths.size(); i ++) {
