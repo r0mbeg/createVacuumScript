@@ -6,7 +6,7 @@ public class main extends bot_config{
     public static void main(String[] args) throws IOException {
         String desktopDirectory = System.getProperty("user.home") + "\\Desktop";
 
-        String lpuName = "test_lpu";
+        String lpuName = "p117";
         String archivation = "7z";//winrar 7z no
 
         ArrayList<String> inputList = new ArrayList<>();
@@ -47,10 +47,11 @@ public class main extends bot_config{
         writer.write("set /a vacuumed_counter = 0 \n");
 
 
-        writer.write("cd /d " + logPath.substring(0, logPath.indexOf("vacuumization.log")) +"\n");
+
 
         for (int i = 0; i < dbPaths.size(); i++) {
             writer.write("echo --------------------------" + dbNames.get(i).toUpperCase() + "-------------------------- >> " + logPath + "\n");
+            writer.write("cd /d " + logPath.substring(0, logPath.indexOf("vacuumization.log")) +"\n");
             //writer.write("cd /d " + dbDirectories.get(i) + "\n");
             //начинаем процесс бекапа и вакуума только если база использовалась давно
             writer.write("set /a res = 1\n");
@@ -116,7 +117,9 @@ public class main extends bot_config{
         writer.flush();
         writer.close();
 
-
+        //////////////////////////////////////////////////
+        //////////////////////BACKUP//////////////////////
+        //////////////////////////////////////////////////
         logPath = logPath.substring(0, logPath.indexOf("vacuumization.log"))+"backup.log";
         file = new File(desktopDirectory + "\\backup_" + lpuName + ".bat");
         file.createNewFile();
@@ -129,9 +132,9 @@ public class main extends bot_config{
             writer.write("echo --------------------------" + dbNames.get(i).toUpperCase() + "-------------------------- >> " + logPath + "\n");
             //writer.write("cd /d " + dbDirectories.get(i) + "\n");
             writer.write("echo 1. A new backup started %date% at %time% >> " + logPath + "\n");
-            writer.write("if exist \"" + dbDirectories.get(i) + "\\" + dbNames.get(i)+ "_backup_*.rar\" forfiles /p \"" + dbDirectories.get(i) + "\" /m " + dbNames.get(i) + "_backup_*.rar /d -4 /c \"cmd /c del @file\"\n");
-            writer.write("if exist \"" + dbDirectories.get(i) + "\\" + dbNames.get(i)+ "_backup_*.7z\" forfiles /p \"" + dbDirectories.get(i) + "\" /m " + dbNames.get(i) + "_backup_*.7z /d -4 /c \"cmd /c del @file\"\n");
-            writer.write("if exist \"" + dbDirectories.get(i) + "\\" + dbNames.get(i) + "_backup_*.db\" forfiles /p \"" + dbDirectories.get(i) + "\" /m " + dbNames.get(i) + "_backup_*.db /d -4 /c \"cmd /c del @file\"\n");
+            writer.write("if exist \"" + dbDirectories.get(i) + "\\" + dbNames.get(i)+ "_backup_*.rar\" forfiles /p \"" + dbDirectories.get(i) + "\" /m " + dbNames.get(i) + "_backup_*.rar /d -5 /c \"cmd /c del @file\"\n");
+            writer.write("if exist \"" + dbDirectories.get(i) + "\\" + dbNames.get(i)+ "_backup_*.7z\" forfiles /p \"" + dbDirectories.get(i) + "\" /m " + dbNames.get(i) + "_backup_*.7z /d -5 /c \"cmd /c del @file\"\n");
+            writer.write("if exist \"" + dbDirectories.get(i) + "\\" + dbNames.get(i) + "_backup_*.db\" forfiles /p \"" + dbDirectories.get(i) + "\" /m " + dbNames.get(i) + "_backup_*.db /d -5 /c \"cmd /c del @file\"\n");
             writer.write("echo 2. The old backups were deleted at %time% >>  " + logPath + "\n");
             writer.write("if exist \"" + dbDirectories.get(i) + "\\" + dbNames.get(i) + "_copy_for_backup.db\" del \"" + dbDirectories.get(i) + "\\" + dbNames.get(i) + "_copy_for_backup.db\" \n");
             writer.write("copy \"" + dbDirectories.get(i) + "\\" + dbNames.get(i) + ".db\" " + "\"" + dbDirectories.get(i) + "\\" + dbNames.get(i) + "_copy_for_backup.db\"\n");
