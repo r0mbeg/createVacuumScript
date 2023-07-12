@@ -6,7 +6,7 @@ public class main extends bot_config{
     public static void main(String[] args) throws IOException {
         String desktopDirectory = System.getProperty("user.home") + "\\Desktop";
 
-        String lpuName = "p117";
+        String lpuName = "p96";
         String archivation = "7z";//winrar 7z no
 
         ArrayList<String> inputList = new ArrayList<>();
@@ -126,11 +126,11 @@ public class main extends bot_config{
         writer = new FileWriter(file);
         writer.write("Taskkill /IM SQLiteStudio.exe /F" + "\n" + "\n");
 
-        writer.write("cd /d " + logPath.substring(0, logPath.indexOf("backup.log")) +"\n");
 
         for (int i = 0; i < dbPaths.size(); i++) {
+
             writer.write("echo --------------------------" + dbNames.get(i).toUpperCase() + "-------------------------- >> " + logPath + "\n");
-            //writer.write("cd /d " + dbDirectories.get(i) + "\n");
+            writer.write("cd /d " + logPath.substring(0, logPath.indexOf("backup.log")) +"\n");
             writer.write("echo 1. A new backup started %date% at %time% >> " + logPath + "\n");
             writer.write("if exist \"" + dbDirectories.get(i) + "\\" + dbNames.get(i)+ "_backup_*.rar\" forfiles /p \"" + dbDirectories.get(i) + "\" /m " + dbNames.get(i) + "_backup_*.rar /d -5 /c \"cmd /c del @file\"\n");
             writer.write("if exist \"" + dbDirectories.get(i) + "\\" + dbNames.get(i)+ "_backup_*.7z\" forfiles /p \"" + dbDirectories.get(i) + "\" /m " + dbNames.get(i) + "_backup_*.7z /d -5 /c \"cmd /c del @file\"\n");
