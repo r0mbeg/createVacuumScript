@@ -6,8 +6,8 @@ public class main extends bot_config {
     public static void main(String[] args) throws IOException {
         String desktopDirectory = System.getProperty("user.home") + "\\Desktop";
 
-        String lpuName = "p87";
-        String archivation = "7z";//winrar 7z no
+        String lpuName = "p86";
+
 
         ArrayList<String> inputList = new ArrayList<>();
         try {
@@ -51,8 +51,6 @@ public class main extends bot_config {
             if (!dbNames.get(i).toUpperCase().equals("SENDED_API")) {
                 writer.write("echo --------------------------" + dbNames.get(i).toUpperCase() + "-------------------------- >> " + logPath + "\n");
                 writer.write("cd /d " + logPath.substring(0, logPath.indexOf("vacuumization.log")) + "\n");
-                //writer.write("cd /d " + dbDirectories.get(i) + "\n");
-                //начинаем процесс бекапа и вакуума только если база использовалась давно
                 writer.write("set /a res = 1\n");
                 writer.write("set /a db_counter += 1 \n");
                 writer.write("if exist sqlite3.exe ( \n");
@@ -94,18 +92,13 @@ public class main extends bot_config {
 
 
         writer.write("echo -----------------BACKUPS-ARCHIVATION-STARTS-------------------- >> " + logPath + "\n");
+        writer.write("cd /d " + logPath.substring(0, logPath.indexOf("vacuumization.log")) + "\n\n");
         for (int i = 0; i < dbPaths.size(); i++) {
             if (!dbNames.get(i).toUpperCase().equals("SENDED_API")) {
                 writer.write("echo  Archivation of the base " + dbNames.get(i) + ", number " + i + " started %date% at %time% >> " + logPath + "\n");
-                writer.write("cd /d " + dbDirectories.get(i) + "\n");
-                if (archivation == "winrar") {
-                    writer.write("\"" + archiverPath + "\\winrar.exe" + "\" a " + dbNames.get(i) + "_backup_%date%.rar " + dbNames.get(i) + "_backup_%date%.db" + "\n");
-                    writer.write("if exist " + dbNames.get(i) + "_backup_%date%.rar del " + dbNames.get(i) + "_backup_%date%.db" + "\n");
-                } else if (archivation == "7z") {//лучше!!!
-                    writer.write("\"" + archiverPath + "\\7z.exe" + "\" a " + dbNames.get(i) + "_backup_%date%.7z " + dbNames.get(i) + "_backup_%date%.db" + "\n");
-                    writer.write("if exist " + dbNames.get(i) + "_backup_%date%.7z del " + dbNames.get(i) + "_backup_%date%.db" + "\n");
-                }
-                writer.write("echo  Archivation of the base " + dbNames.get(i) + ", number " + i + " ended %date% at %time% >> " + logPath + "\n");
+                writer.write("\"" + archiverPath + "\\7z.exe" + "\" a \"" + dbDirectories.get(i) + "\\" + dbNames.get(i) + "_backup_%date%.7z\" " + dbDirectories.get(i) + "\\" + dbNames.get(i) + "_backup_%date%.db\"" + "\n");
+                writer.write("if exist \"" + dbDirectories.get(i) + "\\" + dbNames.get(i) + "_backup_%date%.7z\" del \"" + dbDirectories.get(i) + "\\" + dbNames.get(i) + "_backup_%date%.db\"" + "\n");
+                writer.write("echo  Archivation of the base " + dbNames.get(i) + ", number " + i + " ended %date% at %time% >> " + logPath + "\n\n");
             }
         }
         writer.write("echo -----------------BACKUPS-ARCHIVATION-ENDS-------------------- >> " + logPath + "\n" + "\n");
@@ -127,7 +120,6 @@ public class main extends bot_config {
         writer = new FileWriter(file);
         writer.write("Taskkill /IM SQLiteStudio.exe /F" + "\n" + "\n");
 
-
         for (int i = 0; i < dbPaths.size(); i++) {
             writer.write("echo --------------------------" + dbNames.get(i).toUpperCase() + "-------------------------- >> " + logPath + "\n");
             writer.write("cd /d " + logPath.substring(0, logPath.indexOf("backup.log")) + "\n");
@@ -144,19 +136,14 @@ public class main extends bot_config {
             writer.write("echo ------------------------------------------------------------- >> " + logPath + "\n" + "\n");
 
         }
-
+        
         writer.write("echo -----------------BACKUPS-ARCHIVATION-STARTS-------------------- >> " + logPath + "\n");
+        writer.write("cd /d " + logPath.substring(0, logPath.indexOf("backup.log")) + "\n\n");
         for (int i = 0; i < dbPaths.size(); i++) {
             writer.write("echo  Archivation of the base " + dbNames.get(i) + ", number " + i + " started %date% at %time% >> " + logPath + "\n");
-            writer.write("cd /d " + dbDirectories.get(i) + "\n");
-            if (archivation == "winrar") {
-                writer.write("\"" + archiverPath + "\\winrar.exe" + "\" a " + dbNames.get(i) + "_backup_%date%.rar " + dbNames.get(i) + "_backup_%date%.db" + "\n");
-                writer.write("if exist " + dbNames.get(i) + "_backup_%date%.rar del " + dbNames.get(i) + "_backup_%date%.db" + "\n");
-            } else if (archivation == "7z") {//лучше!!!
-                writer.write("\"" + archiverPath + "\\7z.exe" + "\" a " + dbNames.get(i) + "_backup_%date%.7z " + dbNames.get(i) + "_backup_%date%.db" + "\n");
-                writer.write("if exist " + dbNames.get(i) + "_backup_%date%.7z del " + dbNames.get(i) + "_backup_%date%.db" + "\n");
-            }
-            writer.write("echo  Archivation of the base " + dbNames.get(i) + ", number " + i + " ended %date% at %time% >> " + logPath + "\n");
+            writer.write("\"" + archiverPath + "\\7z.exe" + "\" a \"" + dbDirectories.get(i) + "\\" + dbNames.get(i) + "_backup_%date%.7z\" " + dbDirectories.get(i) + "\\" + dbNames.get(i) + "_backup_%date%.db\"" + "\n");
+            writer.write("if exist \"" + dbDirectories.get(i) + "\\" + dbNames.get(i) + "_backup_%date%.7z\" del \"" + dbDirectories.get(i) + "\\" + dbNames.get(i) + "_backup_%date%.db\"" + "\n");
+            writer.write("echo  Archivation of the base " + dbNames.get(i) + ", number " + i + " ended %date% at %time% >> " + logPath + "\n\n");
         }
         writer.write("echo -----------------BACKUPS-ARCHIVATION-ENDS-------------------- >> " + logPath + "\n\n");
 
